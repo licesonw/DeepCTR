@@ -1,5 +1,7 @@
 # DeepCTR
 
+Fork of DeepCTR library which adds multiclass support.
+
 [![Python Versions](https://img.shields.io/pypi/pyversions/deepctr.svg)](https://pypi.org/project/deepctr)
 [![Downloads](https://pepy.tech/badge/deepctr)](https://pepy.tech/project/deepctr)
 [![PyPI Version](https://img.shields.io/pypi/v/deepctr.svg)](https://pypi.org/project/deepctr)
