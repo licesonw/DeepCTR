@@ -18,7 +18,7 @@ from ..layers.utils import concat_fun
 
 def DeepFM(linear_feature_columns, dnn_feature_columns, embedding_size=8, use_fm=True, dnn_hidden_units=(128, 128),
            l2_reg_linear=0.00001, l2_reg_embedding=0.00001, l2_reg_dnn=0, init_std=0.0001, seed=1024, dnn_dropout=0,
-           dnn_activation='relu', dnn_use_bn=False, task='binary'):
+           dnn_activation='relu', dnn_use_bn=False, task='binary', output_dim=1):
     """Instantiates the DeepFM Network architecture.
 
     :param linear_feature_columns: An iterable containing all the features used by linear part of the model.
@@ -35,6 +35,7 @@ def DeepFM(linear_feature_columns, dnn_feature_columns, embedding_size=8, use_fm
     :param dnn_activation: Activation function to use in DNN
     :param dnn_use_bn: bool. Whether use BatchNormalization before activation or not in DNN
     :param task: str, ``"binary"`` for  binary logloss or  ``"regression"`` for regression loss
+    :param output_dim: int, default=1. If task='multiclass', number of classes in the output. 
     :return: A Keras model instance.
     """
 

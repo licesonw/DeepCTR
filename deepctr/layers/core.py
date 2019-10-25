@@ -212,11 +212,12 @@ class PredictionLayer(Layer):
          - **use_bias**: bool.Whether add bias term or not.
     """
 
-    def __init__(self, task='binary', use_bias=True, **kwargs):
+    def __init__(self, task='binary', use_bias=True, output_dim=1, **kwargs):
         if task not in ["binary", "multiclass", "regression"]:
             raise ValueError("task must be binary, multiclass or regression")
         self.task = task
         self.use_bias = use_bias
+        self.output_dim = output_dim
         super(PredictionLayer, self).__init__(**kwargs)
 
     def build(self, input_shape):
@@ -230,19 +231,22 @@ class PredictionLayer(Layer):
 
     def call(self, inputs, **kwargs):
         x = inputs
+        print(f'this is predictionlayer input shape: {x.shape}')
         if self.use_bias:
             x = tf.nn.bias_add(x, self.global_bias, data_format='NHWC')
         if self.task == "binary":
             x = tf.sigmoid(x)
+        output = tf.reshape(x, (-1, 1))
+        
         if self.task == "multiclass":
             x = tf.nn.softmax(x)
-
-        output = tf.reshape(x, (-1, 1))
-
+            output = x
+            print(f'this is predictionlayer ouput shape: {x.shape}')
+            
         return output
 
     def compute_output_shape(self, input_shape):
-        return (None, 1)
+        return (None, self.output_dim)
 
     def get_config(self, ):
         config = {'task': self.task, 'use_bias': self.use_bias}
